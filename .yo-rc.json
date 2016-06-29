@@ -1,0 +1,9 @@
+{
+  "generator-gulp-es6-webapp": {
+    "answers": {
+      "projectName": "zendesk todo",
+      "projectDescription": "Zendesk Task Management App",
+      "githubUser": "as_abhinav"
+    }
+  }
+}
