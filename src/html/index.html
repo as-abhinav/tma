@@ -2,15 +2,102 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="app.css">
-    <link rel="stylesheet" href="images.css">
-    <title>Hello world</title>
+    <title>Task Management App</title>
+    <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
+    <script src="lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
-    <h1>Hello world!</h1>
-    <!-- Sprite image -->
-    <div style="float: left" class="img-ic_done_black_24px img-ic_done_black_24px-dims"></div>
-    <h2 class="working">Working!</h2>
+    <script type="text/html" id="addProjectForm">
+      <ul class="collapsible" data-collapsible="accordion">
+        <li>
+          <div class="collapsible-header">
+            <i class="material-icons prefix">note_add</i>
+            To add a new project click here.
+          </div>
+          <div class="collapsible-body">
+            <div id="addTaskForm">
+              <div class="row">
+                <form class="col s12" action="#">
+                  <div class="row">
+                    <div class="input-field col s12">
+                      <input id="projectName" type="text" class="validate" required>
+                      <label for="projectName">Enter a project name</label>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="input-field col s10">
+                      <input id="projectDesc" type="text" class="validate">
+                      <label for="projectDesc">Enter a project description</label>
+                    </div>
+                    <div class="input-field col s2">
+                      <button class="btn waves-effect waves-light" type="submit" name="action">Add Project
+                        <i class="material-icons right">send</i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </script>
+
+    <script type="text/html" id="laneStructure">
+      <div class="lane col s12 m4">
+        <header class="row">
+          <h3 class="col s10">Todo</h3>
+          <div class="col s2">
+            <span class="new badge">
+              <span class="count">4</span>
+              <span>Projects</span>
+            </span>
+          </div>
+        </header>
+        <div class="row lane">
+        </div>
+      </div>
+    </script>
+
+    <script type="text/html" id="projectCard">
+      <div class="card small">
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+          <p><a href="#">This is a link</a></p>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+        </div>
+      </div>
+    </script>
+
+    <div class="progress">
+        <div class="indeterminate"></div>
+    </div>
+
+    <header class="top-header">
+      <nav class="teal">
+        <div class="nav-wrapper">
+          <a href="/" class="brand-logo">
+            Task Management App
+          </a>
+          <span class="new badge">
+            <span class="count">12</span>
+            <span>Projects</span>
+          </span>
+        </div>
+      </nav>
+    </header>
+    <div class="page-wrapper">
+      <div class="wall row">
+
+      </div>
+    </div>
     <script src="scripts.js"></script>
   </body>
 </html>

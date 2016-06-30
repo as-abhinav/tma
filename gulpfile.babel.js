@@ -88,7 +88,7 @@ function runScriptsBundler(isWatchMode) {
 gulp.task('default', (callback) =>
   sequence(
     'clean',
-    ['build:html', 'build:sass', 'build:svg', 'build:js:watch'],
+    ['build:html', 'build:sass', 'build:svg', 'build:js:watch', 'copy:img', 'copy:libjs'],
     ['watch', 'browsersync'],
     callback
   )
@@ -98,7 +98,7 @@ gulp.task('default', (callback) =>
 gulp.task('build', (callback) =>
   sequence(
     'clean',
-    ['build:html', 'build:sass', 'build:svg', 'build:js'],
+    ['build:html', 'build:sass', 'build:svg', 'build:js', 'copy:img', 'copy:libjs'],
     'server', callback
   )
 );
@@ -118,6 +118,21 @@ gulp.task('clean', (callback) => {
   const paths = [destinationDirectory];
   return del(paths, callback);
 });
+
+// copy images to destination folder
+gulp.task('copy:img', () => {
+  return gulp.src(`${sourceDirectory}/img/**/*.*`)
+         .pipe(plumber())
+         .pipe(gulp.dest(destinationDirectory));
+});
+
+// copy lib js to destination folder
+gulp.task('copy:libjs', () => {
+  return gulp.src(`${sourceDirectory}/js/lib/*.*`)
+         .pipe(plumber())
+         .pipe(gulp.dest(`${destinationDirectory}/lib/`));
+});
+
 
 // Concats SVG image files to a single SVG sprite with a CSS stylesheet.
 gulp.task('build:svg', () => {
@@ -203,7 +218,7 @@ gulp.task('watch', ['browsersync'], () => {
 
   // Styles.
   watch(
-    `${sourceDirectory}/styl/**/*.{scss,css}`,
+    `${sourceDirectory}/sass/**/*.{scss,css}`,
     () => gulp.start('build:sass')
   );
 

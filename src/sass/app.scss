@@ -1,5 +1,62 @@
+@import "materialize.min";
 @import "variables";
 
 body {
   font-family: Helvetica;
+  .progress {
+    margin: 0;
+    position: absolute;
+    display: none;
+    &.show {
+      display: block;
+    }
+  }
+  span.badge.new {
+    &:after {
+      content: '';
+    }
+  }
+}
+
+h1 {
+  font-size: 26px;
+}
+h2 {
+  font-size: 22px;
+}
+h3 {
+  font-size: 18px;
+}
+header.top-header nav{
+  .brand-logo {
+    font-size: 18px;
+    padding-left: 10px;
+  }
+}
+
+#addTaskForm {
+  .row {
+    margin-bottom: 0;
+  }
+}
+
+
+.wall {
+  header {
+    @extend .teal, .darken-2;
+    margin-bottom: 0;
+    .col {
+      position: relative;
+      span.badge.new {
+        top: 10px;
+      }
+    }
+  }
+  .row {
+    margin-top: 0;
+  }
+  .card.small {
+    margin-top: 0;
+    height: 150px;
+  }
 }
