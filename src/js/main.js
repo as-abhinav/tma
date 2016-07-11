@@ -4,20 +4,15 @@
     var html    = template(context); // VIEW
  */
 
-import Handlebars from 'handlebars';
 import $ from 'jquery';
 
-import tmpl from './utils/templates';
-import WallManager from './views/wall/WallView';
-import LanesModel from './model/lanes';
-
-// import ProjectCardManager from "./views/tasks/task.manager";
+import WallView from './views/wall/WallView';
 
 const App = (() => {
   let $app = $("#app");
 
   let init = () => {
-    const wall = new WallManager($app);
+    new WallView($app);
   };
 
   return {init};
