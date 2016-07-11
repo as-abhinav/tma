@@ -4,45 +4,20 @@
     var html    = template(context); // VIEW
  */
 
-import WallManager from './wall/wall.manager';
-import wallConfig from './wall/wall.config';
 import Handlebars from 'handlebars';
-import ProjectCardManager from "./projects/project.manager";
+import $ from 'jquery';
+
+import tmpl from './utils/templates';
+import WallManager from './views/wall/WallView';
+import LanesModel from './model/lanes';
+
+// import ProjectCardManager from "./views/tasks/task.manager";
 
 const App = (() => {
   let $app = $("#app");
 
   let init = () => {
-    // Init Wall
-    let wall = new WallManager($app, wallConfig);
-
-    // Init Form to add stickies
-    $app.prepend(Handlebars.compile($("#addFormTemplate").html())({}));
-
-    initComponents();
-    initAddForm();
-  },
-
-  initComponents = () => {
-    // Init global components
-    Materialize.updateTextFields();
-    $('.collapsible').collapsible({accordion : false});
-  },
-
-  initAddForm = () => {
-    $('#addProjectForm').on('submit', (e) => {
-      e.preventDefault();
-      let data = {
-        id: (new Date()).getTime().toString(),
-        title: $('#projectName').val(),
-        description: $('#projectDesc').val()
-      };
-
-      ProjectCardManager.render($('#todoLane'),data);
-
-      // let storyCard = new
-      $('.collapsible-header').click();
-    });
+    const wall = new WallManager($app);
   };
 
   return {init};
