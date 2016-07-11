@@ -42,14 +42,19 @@ header.top-header nav{
 
 
 .wall {
+  margin-top: 10px;
   header {
     @extend .teal, .darken-2;
     margin-bottom: 0;
+    color: $brand-white;
     .col {
       position: relative;
       span.badge.new {
         top: 10px;
       }
+    }
+    .card-container {
+
     }
   }
   .row {

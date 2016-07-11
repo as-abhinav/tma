@@ -11,68 +11,75 @@
     <script src="lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
-    <script type="text/html" id="addProjectForm">
-      <ul class="collapsible" data-collapsible="accordion">
+    <script type="text/x-handlebars-template" id="badgeCountTemplate">
+      <span class="new badge">
+        <span class="count">{{count}}</span>
+        <span>{{project_label}}</span>
+      </span>
+    </script>
+
+    <script type="text/x-handlebars-template" id="addFormTemplate">
+      <ul class="collapsible popout" data-collapsible="accordion">
         <li>
           <div class="collapsible-header">
-            <i class="material-icons prefix">note_add</i>
-            To add a new project click here.
+            <i class="material-icons prefix">note_add</i>To add a new project click here.
           </div>
           <div class="collapsible-body">
-            <div id="addTaskForm">
+            <form action="#" id="addProjectForm">
               <div class="row">
-                <form class="col s12" action="#">
-                  <div class="row">
-                    <div class="input-field col s12">
-                      <input id="projectName" type="text" class="validate" required>
-                      <label for="projectName">Enter a project name</label>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="input-field col s10">
-                      <input id="projectDesc" type="text" class="validate">
-                      <label for="projectDesc">Enter a project description</label>
-                    </div>
-                    <div class="input-field col s2">
-                      <button class="btn waves-effect waves-light" type="submit" name="action">Add Project
-                        <i class="material-icons right">send</i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
+                <div class="input-field col s12">
+                  <input id="projectName" type="text" class="validate" required>
+                  <label for="projectName">Enter a project name</label>
+                </div>
               </div>
-            </div>
+              <div class="row">
+                <div class="input-field col s10">
+                  <input id="projectDesc" type="text" class="validate">
+                  <label for="projectDesc">Enter a project description</label>
+                </div>
+                <div class="input-field col s2">
+                  <button class="btn waves-effect waves-light" type="submit" name="action">Add Project
+                    <i class="material-icons right">send</i>
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </li>
       </ul>
     </script>
 
-    <script type="text/html" id="laneStructure">
-      <div class="lane col s12 m4">
+    <script type="text/x-handlebars-template" id="laneTemplate">
+      <div id="{{identifier}}" class="lane col s12 m4">
         <header class="row">
-          <h3 class="col s10">Todo</h3>
-          <div class="col s2">
-            <span class="new badge">
-              <span class="count">4</span>
-              <span>Projects</span>
-            </span>
-          </div>
+          <h3 class="col s10">{{title}}</h3>
+          <div class="col s2 badge-container"></div>
         </header>
-        <div class="row lane">
+        <div class="row card-container z-depth-3">
+          {{#each cards ~}}
+            {{~#if test}}
+              <!-- CARD TEMPLATE TO BE POPULATED HERE. <a href="{{url}}"> {{~title}}</a> -->
+            {{~/if~}}
+          {{~/each}}
         </div>
       </div>
     </script>
 
-    <script type="text/html" id="projectCard">
-      <div class="card small">
+    <script type="text/x-handlebars-template" id="projectCardTemplate">
+      <div id="card_{{id}}" class="card small">
         <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
-          <p><a href="#">This is a link</a></p>
+          <span class="card-title activator grey-text text-darken-4">{{title}}<i class="material-icons right">more_vert</i></span>
+          <p><a href="#"></a></p>
         </div>
         <div class="card-reveal">
-          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-          <p>Here is some more information about this product that is only revealed once clicked on.</p>
+          <span class="card-title grey-text text-darken-4">{{title}}<i class="material-icons right">close</i></span>
+          <p>{{description}}</p>
         </div>
+      </div>
+    </script>
+
+    <script type="text/x-handlebars-template" id="wallTemplate">
+      <div class="wall row">
       </div>
     </script>
 
@@ -86,18 +93,13 @@
           <a href="/" class="brand-logo">
             Task Management App
           </a>
-          <span class="new badge">
-            <span class="count">12</span>
-            <span>Projects</span>
-          </span>
+          <!-- {{ BADGE }} -->
         </div>
       </nav>
     </header>
-    <div class="page-wrapper">
-      <div class="wall row">
 
-      </div>
-    </div>
+    <div id="app" class="page-wrapper"></div>
+
     <script src="scripts.js"></script>
   </body>
 </html>

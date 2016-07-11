@@ -15,70 +15,59 @@ import autoprefixer from 'gulp-autoprefixer';
 import concat from 'gulp-concat';
 import gIf from 'gulp-if';
 import watch from 'gulp-watch';
-import svgSprite from 'gulp-svg-sprite';
-import cssNano from 'gulp-cssnano';
 import sequence from 'gulp-sequence';
 import util from 'gulp-util';
 import plumber from 'gulp-plumber';
 import shell from 'gulp-shell';
 import packageJSON from './package.json';
-import { argv } from 'yargs';
+import {argv} from 'yargs';
 
 // Configurations.
 const IS_DEV_MODE = argv.development;
 const sourceDirectory = packageJSON.directories.src;
 const destinationDirectory = packageJSON.directories.dist;
 
-/**
- * Helper function to bundle the scripts using browserify
- * If in watch mode watchify is used for incremental building.
- *
- * @param  {Boolean} isWatchMode Are we in watching mode?
- * @return {Function}            Exposed bundler function.
- */
+
 function runScriptsBundler(isWatchMode) {
   // Configuration.
   const config = {
     babel: JSON.parse(fs.readFileSync(`${__dirname}/.babelrc`, 'utf8')),
     browserify: {
       entries: `${sourceDirectory}/js/main.js`,
-      debug: IS_DEV_MODE,
+      debug: IS_DEV_MODE
     },
     uglify: {
-      compress: { drop_debugger: !IS_DEV_MODE },
-    },
+      compress: {
+        drop_debugger: !IS_DEV_MODE
+      }
+    }
   };
 
   // Browserify bundler instance with babelify transform.
-  const browserifyInstance = browserify(config.browserify)
-    .transform(babelify.configure(config.babel));
+  const browserifyInstance = browserify(config.browserify).transform(babelify.configure(config.babel));
 
   // If in watch mode watchify module is used
   // to wrap the browserify instance for incremental building.
   const bundler = isWatchMode ?
     watchify(browserifyInstance) : browserifyInstance;
 
-  // Bundler function responsible for stream processing.
   function rebundle() {
-    // Browserify stream to be processed.
-    const stream = bundler.bundle();
-
-    // Return processed stream.
-    return stream
+    return bundler.bundle()
       .on('error', (error) => {
         util.beep();
-        console.log(error); // eslint-disable-line no-console
         this.emit('end');
       })
       .pipe(source('scripts.js'))
       .pipe(gIf(!IS_DEV_MODE, buffer()))
       .pipe(gIf(!IS_DEV_MODE, uglify(config.uglify)))
       .pipe(gulp.dest(destinationDirectory))
-      .pipe(gIf(IS_DEV_MODE, browserSync.reload({ stream: true })));
+      .pipe(gIf(IS_DEV_MODE, browserSync.reload({stream: true})));
   }
 
   // Bundle on changes.
-  bundler.on('update', () => {rebundle();});
+  bundler.on('update', () => {
+    rebundle();
+  });
 
   // Return bundler function.
   return rebundle();
@@ -88,7 +77,7 @@ function runScriptsBundler(isWatchMode) {
 gulp.task('default', (callback) =>
   sequence(
     'clean',
-    ['build:html', 'build:sass', 'build:svg', 'build:js:watch', 'copy:img', 'copy:libjs'],
+    ['build:html', 'build:sass', 'build:js:watch', 'copy:libjs'],
     ['watch', 'browsersync'],
     callback
   )
@@ -98,7 +87,7 @@ gulp.task('default', (callback) =>
 gulp.task('build', (callback) =>
   sequence(
     'clean',
-    ['build:html', 'build:sass', 'build:svg', 'build:js', 'copy:img', 'copy:libjs'],
+    ['build:html', 'build:sass', 'build:js', 'copy:libjs'],
     'server', callback
   )
 );
@@ -107,7 +96,9 @@ gulp.task('build', (callback) =>
 gulp.task('browsersync', () => {
   // Configuration.
   const config = {
-    server: { baseDir: `${destinationDirectory}` },
+    server: {
+      baseDir: `${destinationDirectory}`
+    }
   };
 
   return browserSync(config);
@@ -119,42 +110,13 @@ gulp.task('clean', (callback) => {
   return del(paths, callback);
 });
 
-// copy images to destination folder
-gulp.task('copy:img', () => {
-  return gulp.src(`${sourceDirectory}/img/**/*.*`)
-         .pipe(plumber())
-         .pipe(gulp.dest(destinationDirectory));
-});
-
 // copy lib js to destination folder
 gulp.task('copy:libjs', () => {
   return gulp.src(`${sourceDirectory}/js/lib/*.*`)
-         .pipe(plumber())
-         .pipe(gulp.dest(`${destinationDirectory}/lib/`));
-});
-
-
-// Concats SVG image files to a single SVG sprite with a CSS stylesheet.
-gulp.task('build:svg', () => {
-  // Configuration.
-  const config = {
-    mode: {
-      css: {
-        dest: `${destinationDirectory}/..`,
-        bust: false,
-        prefix: '.img-%s',
-        sprite: 'images.svg',
-        render: { css: { dest: 'images.css' } },
-      },
-    },
-  };
-
-  return gulp.src(`${sourceDirectory}/svg/**/*.svg`)
     .pipe(plumber())
-    .pipe(svgSprite(config))
-    .pipe(gulp.dest(destinationDirectory))
-    .pipe(gIf(IS_DEV_MODE, browserSync.reload({ stream: true })));
+    .pipe(gulp.dest(`${destinationDirectory}/lib/`));
 });
+
 
 // Minifies the HTML file and clones it to destination folder.
 gulp.task('build:html', () => {
@@ -168,7 +130,7 @@ gulp.task('build:html', () => {
     .pipe(plumber())
     .pipe(htmlMin(config))
     .pipe(gulp.dest(destinationDirectory))
-    .pipe(gIf(IS_DEV_MODE, browserSync.reload({ stream: true })));
+    .pipe(gIf(IS_DEV_MODE, browserSync.reload({stream: true})));
 });
 
 // Compiles modular JS written in ES6 down to ES5 with
@@ -180,26 +142,26 @@ gulp.task('build:js', () => runScriptsBundler(false));
 // Same task as above but in watch mode for incremental building.
 gulp.task('build:js:watch', ['build:js'], () => runScriptsBundler(true));
 
-var modules = ['breakpoint'];
 // Concats and auto-prefixes the stylesheets.
 gulp.task('build:sass', () => {
   // Configuration.
   const config = {
-    autoprefixer: { browsers: ['last 2 versions'] },
-    stylus: { 'include css': true },
+    autoprefixer: {
+      browsers: ['last 2 versions']
+    },
+    stylus: {
+      'include css': true
+    }
   };
 
   return gulp.src(`${sourceDirectory}/sass/app.scss`)
     .pipe(plumber())
     .pipe(gIf(IS_DEV_MODE, sourcemaps.init()))
-    // .pipe(stylus(config.stylus))
     .pipe(sass())
     .pipe(autoprefixer(config.autoprefixer))
-    .pipe(gIf(!IS_DEV_MODE, cssNano()))
-    .pipe(gIf(IS_DEV_MODE, sourcemaps.write()))
     .pipe(concat('app.css'))
     .pipe(gulp.dest(destinationDirectory))
-    .pipe(gIf(IS_DEV_MODE, browserSync.reload({ stream: true })));
+    .pipe(gIf(IS_DEV_MODE, browserSync.reload({stream: true})));
 });
 
 // Run local server for the build files.
@@ -220,11 +182,5 @@ gulp.task('watch', ['browsersync'], () => {
   watch(
     `${sourceDirectory}/sass/**/*.{scss,css}`,
     () => gulp.start('build:sass')
-  );
-
-  // Images.
-  watch(
-    `${sourceDirectory}/svg/**/*.svg`,
-    () => gulp.start('build:svg')
   );
 });
