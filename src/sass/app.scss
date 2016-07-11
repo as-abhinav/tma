@@ -62,6 +62,9 @@ header.top-header nav{
   }
   .card.small {
     margin-top: 0;
-    height: 150px;
+    height: 100px;
+    .card-content {
+      max-height: 100%;
+    }
   }
 }

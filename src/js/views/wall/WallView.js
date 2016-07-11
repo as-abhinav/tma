@@ -1,5 +1,5 @@
 import tmpl from '../../utils/templates';
-import LaneView from '../lane/LaneView';
+import LanesView from '../lane/LanesView';
 
 class WallView   {
   constructor (wallContainer) {
@@ -9,15 +9,15 @@ class WallView   {
 
     this.render();
 
-    this.initChilds();
+    this.renderChilds();
   }
 
   render() {
     this.$el = this.parentContainer.append($(this.template())).find(this.selector);
   }
 
-  initChilds() {
-    const lanes = new LaneView(this.$el);
+  renderChilds() {
+    new LanesView(this.$el);
   }
 }
 

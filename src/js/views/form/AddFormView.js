@@ -1,21 +1,22 @@
-import Handlebars from 'handlebars';
 import tmpl from './../../utils/templates';
 
 class AddFormManager {
-  constructor(opt) {
-    this.options = opt;
+  constructor (container) {
+    this.parentContainer = container;
+    this.template = tmpl.addFormTemplate;
+    this.selector = 'form';
 
     this.render();
     this.bindEvents();
   }
 
   render() {
-    const el = $(tmpl.addFormTemplate);
-    this.options.parentContainer.append(el);
+    this.$el = this.parentContainer.append($(this.template())).find(this.selector);
   }
 
   bindEvents() {
-    $('#addProjectForm').on('submit', (e) => {
+    let self = this;
+    self.$el.on('submit', (e) => {
       e.preventDefault();
       var title = $('#taskName').val().trim();
       if(!title) return;
@@ -24,10 +25,7 @@ class AddFormManager {
         title
       };
 
-      // ProjectCardManager.render($('#todoLane'),data);
-
-      // let storyCard = new
-      $('.collapsible-header').click();
+      self.$el.get(0).reset();
     });
   }
 }

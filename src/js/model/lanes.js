@@ -4,15 +4,24 @@ class LanesModel {
       {
         title: "Todo",
         identifier: "todoLane",
-        tasks: []
+        tasks: [{
+          identifier: "random",
+          title: "First Task"
+        }]
       }, {
         title: "In Progress",
         identifier: "inprogressLane",
-        tasks: []
+        tasks: [{
+          identifier: "random2",
+          title: "Second Task"
+        }]
       }, {
         title: "Done",
         identifier: "doneLane",
-        tasks: []
+        tasks: [{
+          identifier: "random3",
+          title: "Third Task"
+        }]
       }
     ];
   }

@@ -6,5 +6,6 @@ export default {
   addFormTemplate:  Handlebars.compile($("#addFormTemplate").html()),
   wallTemplate:     Handlebars.compile($("#wallTemplate").html()),
   laneTemplate:     Handlebars.compile($("#laneTemplate").html()),
-  taskTemplate:     Handlebars.compile($("#taskTemplate").html())
+  taskTemplate:     Handlebars.compile($("#taskTemplate").html()),
+  lanesTemplate:    Handlebars.compile("<div class='lanes'></div>")
 };

@@ -1,23 +1,36 @@
-import Handlebars from 'handlebars';
+import tmpl from './../../utils/templates';
 
-class TaskManager {
-  constructor (opt) {
-    this.projectTemplate = Handlebars.compile($("#projectCardTemplate").html());
-    this.data = opt;
+class TasksView {
+  constructor (taskContainer, tasks) {
+    this.parentContainer = taskContainer;
+    this.template = tmpl.taskTemplate;
+    this.selector = '.task';
+    this.data = tasks;
 
     this.render();
-    this.bindEvents();
+    this.renderChilds();
   }
 
   render() {
-    const projectCardHtml = this.projectTemplate(this.data.task);
-    container.append(projectCardHtml);
-    container.find(`#card_${this.data.task.id}`).parent().find('.badge-container').html(this.badgeCountTemplate(countData));
+    for(let i in this.data) {
+      const task = this.data[i];
+      this.$el = this.parentContainer.append($(this.template(task))).find(this.selector);
+      this.parentContainer.find(`#${task.identifier} .badge-container`).append(tmpl.badgeTemplate());
+    }
   }
 
-  bindEvents() {
-
+  renderChilds() {
   }
+
+  // render() {
+  //   const projectCardHtml = this.projectTemplate(this.data.task);
+  //   container.append(projectCardHtml);
+  //   container.find(`#card_${this.data.task.id}`).parent().find('.badge-container').html(this.badgeCountTemplate(countData));
+  // }
+  //
+  // bindEvents() {
+  //
+  // }
 }
 
-export default TaskManager;
+export default TasksView;

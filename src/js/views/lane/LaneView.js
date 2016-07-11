@@ -1,32 +1,26 @@
 import tmpl from '../../utils/templates';
-import Handlebars from 'handlebars';
+import TasksView from './../tasks/TasksView';
 
-import LaneModel from './../../model/lanes';
-
-class LaneManager {
-  constructor (laneContainer) {
+class LaneView {
+  constructor (laneContainer, lane) {
     this.parentContainer = laneContainer;
     this.template = tmpl.laneTemplate;
-    this.selector = '.lanes';
-    this.data = new LaneModel();
+    this.selector = '.lane';
+    this.data = lane;
 
     this.render();
-    this.bindEvents();
+    this.renderChilds();
   }
 
   render() {
-    for(let i in this.data.lanes) {
-      let lane = this.data.lanes[i];
-
-      this.parentContainer.append($(this.template(lane)));
-
-      // container.find(`#${lane.identifier} .badge-container`).append(this.badgeCountTemplate({}));
-    }
+    this.$el = $(this.template(this.data));
+    this.parentContainer.append(this.$el);
+    this.parentContainer.find(`#${this.data.identifier} .badge-container`).append(tmpl.badgeTemplate());
   }
 
-  bindEvents() {
-
+  renderChilds() {
+    new TasksView(this.$el, this.data.tasks);
   }
 }
 
-export default LaneManager;
+export default LaneView;
