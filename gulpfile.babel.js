@@ -54,6 +54,7 @@ function runScriptsBundler(isWatchMode) {
   function rebundle() {
     return bundler.bundle()
       .on('error', (error) => {
+        console.log(error);
         util.beep();
         this.emit('end');
       })
@@ -77,7 +78,7 @@ function runScriptsBundler(isWatchMode) {
 gulp.task('default', (callback) =>
   sequence(
     'clean',
-    ['build:html', 'build:sass', 'build:js:watch', 'copy:libjs'],
+    ['build:html', 'build:sass', 'build:js:watch', 'copy:img', 'copy:libjs'],
     ['watch', 'browsersync'],
     callback
   )
@@ -87,10 +88,15 @@ gulp.task('default', (callback) =>
 gulp.task('build', (callback) =>
   sequence(
     'clean',
-    ['build:html', 'build:sass', 'build:js', 'copy:libjs'],
+    ['build:html', 'build:sass', 'build:js', 'copy:img', 'copy:libjs'],
     'server', callback
   )
 );
+
+gulp.task('copy:img', () => {
+  return gulp.src(`${sourceDirectory}/img/*.*`)
+    .pipe(gulp.dest(`${destinationDirectory}`));
+});
 
 // Keeps changes in sync with the browser.
 gulp.task('browsersync', () => {
@@ -123,7 +129,7 @@ gulp.task('build:html', () => {
   // Configuration.
   const config = {
     removeComments: true,
-    collapseWhitespace: true,
+    collapseWhitespace: true
   };
 
   return gulp.src(`${sourceDirectory}/html/**/*.html`)
