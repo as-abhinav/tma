@@ -3,6 +3,7 @@ import View from './../ParentView';
 
 class TaskView extends View {
   constructor (taskContainer, task) {
+    taskContainer = taskContainer || $('.card-container').eq(0);
     super(taskContainer, tmpl.taskTemplate, '.task');
     
     this.data = task;

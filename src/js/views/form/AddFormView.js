@@ -2,7 +2,7 @@ import './../../../../node_modules/object.observe/dist/object-observe-lite';
 import './../../../../node_modules/array.observe/array-observe';
 import tmpl from './../../utils/templates';
 import LaneModel from './../../model/LanesModel';
-import TaskView from './../tasks/TasksView';
+import TaskView from './../tasks/TaskView';
 
 
 class AddFormManager {
@@ -37,8 +37,8 @@ class AddFormManager {
   }
 
   bindDataObserver() {
-    Array.observe(LaneModel.getLane().tasks, function(changes) {
-      new TaskView(changes);
+    LaneModel.bindEvents(LaneModel.getLane().tasks, function(changes) {
+      new TaskView(null,changes[0].object[changes[0].index]);
       console.log("Changes: ", changes);
     });
   }

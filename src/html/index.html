@@ -37,22 +37,16 @@
           <h3 class="col s10">{{title}}</h3>
           <div class="col s2 badge-container"></div>
         </header>
-        <div class="row card-container z-depth-3">
-          {{#each cards ~}}
-            {{~#if test}}
-              <!-- CARD TEMPLATE TO BE POPULATED HERE. <a href="{{url}}"> {{~title}}</a> -->
-            {{~/if~}}
-          {{~/each}}
-        </div>
+        <ul class="row card-container"></ul>
       </div>
     </script>
 
     <script type="text/x-handlebars-template" id="taskTemplate">
-      <div id="card_{{identifier}}" class="card small">
+      <li id="card_{{identifier}}" class="card small">
         <div class="card-content">
           <span class="card-title activator grey-text text-darken-4">{{title}}</span>
         </div>
-      </div>
+      </li>
     </script>
 
     <script type="text/x-handlebars-template" id="wallTemplate">
