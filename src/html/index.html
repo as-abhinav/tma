@@ -3,11 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task Management App</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="app.css">
-    <title>Task Management App</title>
     <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
-    <script src="lib/materialize.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
     <script type="text/x-handlebars-template" id="badgeCountTemplate">
@@ -21,11 +20,10 @@
       <form action="#" id="addProjectForm">
         <div class="row">
           <div class="input-field col s10">
-            <input id="taskName" type="text" class="validate" required>
-            <label for="taskName">Enter a task name</label>
+            <input id="taskName" type="text" class="validate" required placeholder="Enter a task name">
           </div>
           <div class="input-field col s2">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Add Project</button>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Add Task</button>
           </div>
         </div>
       </form>
@@ -62,7 +60,6 @@
           <a href="/" class="brand-logo">
             Task Management App
           </a>
-          <!-- {{ BADGE }} -->
         </div>
       </nav>
     </header>

@@ -13,7 +13,6 @@ class AddFormView extends View {
     this.render();
     this.bindEvents();
     this.bindDataObserver();
-
   }
 
   bindEvents() {
