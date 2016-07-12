@@ -31,6 +31,7 @@ class AddFormView extends View {
   }
 
   bindDataObserver() {
+    LaneModel.getLane().tasks = LaneModel.getLane().tasks || [];
     LaneModel.bindEvents(LaneModel.getLane().tasks, function(changes) {
       const changedObject = changes[0];
       new TaskView(null, changedObject.object[changedObject.index]);

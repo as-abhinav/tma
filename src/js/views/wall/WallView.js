@@ -12,7 +12,6 @@ class WallView extends View {
   }
 
   renderChild() {
-    debugger;
     new LanesView(this.$el.find('.lanes-container'));
     new AddFormView(this.$el.find('.form-container'));
   }

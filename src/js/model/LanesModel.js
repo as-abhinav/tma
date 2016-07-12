@@ -5,11 +5,7 @@ class LanesModel {
     this.lanes = st.get('app') || [
       {
         title: "Todo",
-        identifier: "todoLane",
-        tasks: [{
-          identifier: "random",
-          title: "First Task"
-        }]
+        identifier: "todoLane"
       }, {
         title: "In Progress",
         identifier: "inprogressLane"
