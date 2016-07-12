@@ -1,25 +1,21 @@
 import tmpl from './../../utils/templates';
 
+import View from './../ParentView';
 import LaneView from './../lane/LaneView';
-import LaneModel from './../../model/lanes';
+import LaneModel from '../../model/LanesModel';
 
-class LanesView {
+class LanesView extends View {
   constructor (laneContainer) {
-    this.parentContainer = laneContainer;
-    this.template = tmpl.lanesTemplate;
-    this.selector = '.lanes';
-    this.data = new LaneModel();
+    super(laneContainer, tmpl.lanesTemplate, '.lanes');
 
     this.render();
-
     this.renderChilds();
   }
 
-  render() {
-    this.$el = this.parentContainer.append($(this.template())).find(this.selector);
-  }
 
   renderChilds() {
+    this.data = LaneModel;
+
     for(let i in this.data.lanes) {
       new LaneView(this.$el, this.data.lanes[i]);
     }

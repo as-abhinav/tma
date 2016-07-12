@@ -1,4 +1,9 @@
+import './../../../../node_modules/object.observe/dist/object-observe-lite';
+import './../../../../node_modules/array.observe/array-observe';
 import tmpl from './../../utils/templates';
+import LaneModel from './../../model/LanesModel';
+import TaskView from './../tasks/TasksView';
+
 
 class AddFormManager {
   constructor (container) {
@@ -8,6 +13,8 @@ class AddFormManager {
 
     this.render();
     this.bindEvents();
+
+    this.bindDataObserver();
   }
 
   render() {
@@ -24,8 +31,15 @@ class AddFormManager {
         id: (new Date()).getTime().toString(),
         title
       };
-
+      LaneModel.addTask(task, null);
       self.$el.get(0).reset();
+    });
+  }
+
+  bindDataObserver() {
+    Array.observe(LaneModel.getLane().tasks, function(changes) {
+      new TaskView(changes);
+      console.log("Changes: ", changes);
     });
   }
 }

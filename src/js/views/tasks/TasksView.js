@@ -1,36 +1,22 @@
 import tmpl from './../../utils/templates';
+import View from './../ParentView';
+import TaskView from './TaskView';
 
-class TasksView {
-  constructor (taskContainer, tasks) {
-    this.parentContainer = taskContainer;
-    this.template = tmpl.taskTemplate;
-    this.selector = '.task';
+class TasksView extends View {
+  constructor (tasksContainer, tasks) {
+    super(tasksContainer, tmpl.taskTemplate, '.task');
+
     this.data = tasks;
 
     this.render();
-    this.renderChilds();
   }
 
   render() {
     for(let i in this.data) {
       const task = this.data[i];
-      this.$el = this.parentContainer.append($(this.template(task))).find(this.selector);
-      this.parentContainer.find(`#${task.identifier} .badge-container`).append(tmpl.badgeTemplate());
+      new TaskView(this.container, task);
     }
   }
-
-  renderChilds() {
-  }
-
-  // render() {
-  //   const projectCardHtml = this.projectTemplate(this.data.task);
-  //   container.append(projectCardHtml);
-  //   container.find(`#card_${this.data.task.id}`).parent().find('.badge-container').html(this.badgeCountTemplate(countData));
-  // }
-  //
-  // bindEvents() {
-  //
-  // }
 }
 
 export default TasksView;

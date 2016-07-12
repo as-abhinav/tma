@@ -1,11 +1,10 @@
 import tmpl from '../../utils/templates';
+import View from './../ParentView';
 import TasksView from './../tasks/TasksView';
 
-class LaneView {
+class LaneView extends View {
   constructor (laneContainer, lane) {
-    this.parentContainer = laneContainer;
-    this.template = tmpl.laneTemplate;
-    this.selector = '.lane';
+    super(laneContainer, tmpl.laneTemplate, '.lane');
     this.data = lane;
 
     this.render();
@@ -13,13 +12,12 @@ class LaneView {
   }
 
   render() {
-    this.$el = $(this.template(this.data));
-    this.parentContainer.append(this.$el);
-    this.parentContainer.find(`#${this.data.identifier} .badge-container`).append(tmpl.badgeTemplate());
+    this.$el = $(this.viewTemplate(this.data));
+    this.container.append(this.$el);
   }
 
   renderChilds() {
-    new TasksView(this.$el, this.data.tasks);
+    new TasksView(this.$el.find('.card-container'), this.data.tasks);
   }
 }
 

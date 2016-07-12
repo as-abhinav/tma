@@ -1,23 +1,19 @@
 import tmpl from '../../utils/templates';
+import View from './../ParentView';
 import LanesView from '../lane/LanesView';
+import AddFormView from './../form/AddFormView';
 
-class WallView   {
+class WallView extends View {
   constructor (wallContainer) {
-    this.parentContainer = wallContainer;
-    this.selector = '.wall';
-    this.template = tmpl.wallTemplate;
+    super(wallContainer, tmpl.wallTemplate, '.wall');
 
     this.render();
-
     this.renderChilds();
   }
 
-  render() {
-    this.$el = this.parentContainer.append($(this.template())).find(this.selector);
-  }
-
   renderChilds() {
-    new LanesView(this.$el);
+    new LanesView(this.$el.find('.lanes-container'));
+    new AddFormView(this.$el.find('.form-container'));
   }
 }
 
