@@ -1,24 +1,19 @@
 import './../../../../node_modules/object.observe/dist/object-observe-lite';
 import './../../../../node_modules/array.observe/array-observe';
+
 import tmpl from './../../utils/templates';
+import View from './../ParentView';
 import LaneModel from './../../model/LanesModel';
 import TaskView from './../tasks/TaskView';
 
-
-class AddFormManager {
+class AddFormView extends View {
   constructor (container) {
-    this.parentContainer = container;
-    this.template = tmpl.addFormTemplate;
-    this.selector = 'form';
+    super(container, tmpl.addFormTemplate, 'form');
 
     this.render();
     this.bindEvents();
-
     this.bindDataObserver();
-  }
 
-  render() {
-    this.$el = this.parentContainer.append($(this.template())).find(this.selector);
   }
 
   bindEvents() {
@@ -38,10 +33,10 @@ class AddFormManager {
 
   bindDataObserver() {
     LaneModel.bindEvents(LaneModel.getLane().tasks, function(changes) {
-      new TaskView(null,changes[0].object[changes[0].index]);
-      console.log("Changes: ", changes);
+      const changedObject = changes[0];
+      new TaskView(null, changedObject.object[changedObject.index]);
     });
   }
 }
 
-export default AddFormManager;
+export default AddFormView;

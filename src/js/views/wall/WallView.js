@@ -8,10 +8,11 @@ class WallView extends View {
     super(wallContainer, tmpl.wallTemplate, '.wall');
 
     this.render();
-    this.renderChilds();
+    this.renderChild();
   }
 
-  renderChilds() {
+  renderChild() {
+    debugger;
     new LanesView(this.$el.find('.lanes-container'));
     new AddFormView(this.$el.find('.form-container'));
   }
