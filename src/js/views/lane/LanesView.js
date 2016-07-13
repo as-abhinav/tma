@@ -26,8 +26,9 @@ class LanesView extends View {
     dragula($('.card-container').toArray())
       .on('drop', function (el) {
         const $el = $(el);
+        const $laneEl = $el.closest('.lane');
         const taskId = $el.attr('id').replace('card_', '');
-        const laneId = $el.closest('.lane').attr('id').replace('lane_','');
+        const laneId = $laneEl.attr('id').replace('lane_','');
 
         LaneModel.addTaskToLane(laneId, taskId);
       });

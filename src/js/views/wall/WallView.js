@@ -1,7 +1,7 @@
 import tmpl from '../../utils/templates';
 
 import View from './../ParentView';
-
+import Elements from './../../utils/elements';
 import LanesView from '../lane/LanesView';
 import AddFormView from './../form/AddFormView';
 import BadgeView from './../badge/BadgeView';
@@ -15,6 +15,7 @@ class WallView extends View {
     this.render();
     this.renderChild();
     this.renderOverAllCount();
+    this.bindDataEvents();
   }
 
   renderChild() {
@@ -24,6 +25,19 @@ class WallView extends View {
 
   renderOverAllCount() {
     new BadgeView($('.main-badge-container'), LaneModel.getAllTaskCount());
+  }
+
+  bindDataEvents() {
+
+    LaneModel.lanes.map(lane => {
+      const $laneElement = $(`#lane_${lane.identifier} .badge-container`);
+
+      Array.observe(lane.tasks, (changes) => {
+        // console.log(changes);
+        new BadgeView($laneElement, lane.tasks.length);
+        new BadgeView($(Elements.mainBadgeSelector), LaneModel.getAllTaskCount());
+      });
+    });
   }
 }
 
