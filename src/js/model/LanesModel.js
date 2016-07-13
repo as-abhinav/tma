@@ -54,13 +54,22 @@ class LanesModel {
     Array.observe(data, callback);
   }
 
-  addTaskTolane(laneId, task) {
+  addTaskTolane(laneId, taskId) {
+    let self = this, task;
+    self.lanes.map(lane => {
+      lane.tasks && lane.tasks.map(taskObj => {
+        if(task) return;
+        task = (taskObj.identifier == taskId) ? taskObj : false;
+      });
+    });
+
     const lanes = this.lanes.map(lane => {
-      if (lane.tasks && lane.tasks.includes(task)) {
+      const laneHasTask = lane.tasks && lane.tasks.includes(task);
+      if (laneHasTask) {
         lane.tasks = lane.tasks.filter(taskObj => taskObj !== task);
       }
-      if (lane.id === laneId) {
-        if (lane.tasks && lane.tasks.includes(task)) {
+      if (lane.identifier == laneId) {
+        if (laneHasTask) {
           console.warn('Already attached task to lane', lanes);
         } else {
           lane.tasks = lane.tasks || [];
@@ -69,18 +78,6 @@ class LanesModel {
       }
       return lane;
     });
-
-    this.storeLanes(lanes);
-  }
-
-  removeTaskFromLane(laneId, task){
-    const lanes = this.lanes.map(lane => {
-      if (lane.id === laneId) {
-        lane.tasks = lane.tasks.filter(taskObj => taskObj !== task);
-      }
-      return lane;
-    });
-
 
     this.storeLanes(lanes);
   }

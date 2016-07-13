@@ -23,7 +23,7 @@ class AddFormView extends View {
       var title = $('#taskName').val().trim();
       if(!title) return;
       let task = {
-        id: (new Date()).getTime().toString(),
+        identifier: (new Date()).getTime().toString(),
         title
       };
       LaneModel.addTask(task, null);
