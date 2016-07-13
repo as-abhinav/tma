@@ -21,25 +21,20 @@ class LanesModel {
     st.set('app', data || this.lanes);
   }
   
-  getAllTaskCount() {
+  getAllTaskCount(selectedLane) {
     let count = 0;
-    this.lanes.map(lane => {
+    const lanes = selectedLane ? [selectedLane] : this.lanes;
+    lanes.map(lane => {
       count += lane.tasks ? lane.tasks.length : 0;
     });
 
     return count;
   }
 
-  getLanes() {
-    return this.lanes;
-  }
-
   getLane(id) {
     // return default todolane
     id = id ||  "todoLane";
-    return this.lanes.find(function(lane){
-      return lane.identifier === id;
-    });
+    return this.lanes.find(lane => lane.identifier === id);
   }
 
   addTask(task, laneId) {
@@ -54,7 +49,7 @@ class LanesModel {
     Array.observe(data, callback);
   }
 
-  addTaskTolane(laneId, taskId) {
+  addTaskToLane(laneId, taskId) {
     let self = this, task;
     self.lanes.map(lane => {
       lane.tasks && lane.tasks.map(taskObj => {
@@ -69,9 +64,7 @@ class LanesModel {
         lane.tasks = lane.tasks.filter(taskObj => taskObj !== task);
       }
       if (lane.identifier == laneId) {
-        if (laneHasTask) {
-          console.warn('Already attached task to lane', lanes);
-        } else {
+        if (!laneHasTask) {
           lane.tasks = lane.tasks || [];
           lane.tasks.push(task);
         }

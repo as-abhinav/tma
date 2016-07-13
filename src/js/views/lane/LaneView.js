@@ -16,6 +16,8 @@ class LaneView extends View {
   render() {
     this.$el = $(this.viewTemplate(this.data));
     this.container.append(this.$el);
+
+    new BadgeView(this.$el.find('.badge-container'), LaneModel.getAllTaskCount(this.data));
   }
 
   renderChilds() {

@@ -23,8 +23,7 @@ class WallView extends View {
   }
 
   renderOverAllCount() {
-    const $badgeContainer = $('.main-badge-container');
-    new BadgeView($badgeContainer, LaneModel.getAllTaskCount());
+    new BadgeView($('.main-badge-container'), LaneModel.getAllTaskCount());
   }
 }
 

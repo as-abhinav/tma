@@ -6,7 +6,7 @@ class BadgeView extends View {
 
     super(container, tmpl.badgeTemplate, '.badge');
 
-    this.data = {count};
+    this.data = {count, label: count>1?'Projects':'Project'};
 
     this.render();
   }

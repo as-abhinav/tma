@@ -29,7 +29,7 @@ class LanesView extends View {
         const taskId = $el.attr('id').replace('card_', '');
         const laneId = $el.closest('.lane').attr('id').replace('lane_','');
 
-        LaneModel.addTaskTolane(laneId, taskId);
+        LaneModel.addTaskToLane(laneId, taskId);
       });
   }
 }
