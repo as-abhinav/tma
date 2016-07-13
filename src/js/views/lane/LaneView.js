@@ -1,6 +1,8 @@
 import tmpl from '../../utils/templates';
 import View from './../ParentView';
 import TasksView from './../tasks/TasksView';
+import BadgeView from './../badge/BadgeView';
+import LaneModel from './../../model/LanesModel';
 
 class LaneView extends View {
   constructor (laneContainer, lane) {

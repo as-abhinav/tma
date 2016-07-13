@@ -5,6 +5,7 @@ import tmpl from './../../utils/templates';
 import View from './../ParentView';
 import LaneModel from './../../model/LanesModel';
 import TaskView from './../tasks/TaskView';
+import BadgeView from './../badge/BadgeView';
 
 class AddFormView extends View {
   constructor (container) {
@@ -35,6 +36,10 @@ class AddFormView extends View {
     LaneModel.bindEvents(LaneModel.getLane().tasks, function(changes) {
       const changedObject = changes[0];
       new TaskView(null, changedObject.object[changedObject.index]);
+    });
+
+    LaneModel.bindEvents(LaneModel, function(arr){
+      new BadgeView();
     });
   }
 }

@@ -9,10 +9,10 @@
     <script src="lib/jquery.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
-    <script type="text/x-handlebars-template" id="badgeCountTemplate">
+    <script type="text/x-handlebars-template" id="badgeTemplate">
       <span class="new badge">
         <span class="count">{{count}}</span>
-        <span>{{project_label}}</span>
+        <span>{{#project_label}}</span>
       </span>
     </script>
 
@@ -30,21 +30,21 @@
     </script>
 
     <script type="text/x-handlebars-template" id="laneTemplate">
-      <div id="{{identifier}}" class="lane col s12 m4">
+      <div id="lane_{{identifier}}" class="lane col s12 m4">
         <header class="row">
           <h3 class="col s10">{{title}}</h3>
           <div class="col s2 badge-container"></div>
         </header>
-        <ul class="row card-container"></ul>
+        <div class="row card-container"></div>
       </div>
     </script>
 
     <script type="text/x-handlebars-template" id="taskTemplate">
-      <li id="card_{{identifier}}" class="card small">
+      <div id="card_{{identifier}}" class="card small">
         <div class="card-content">
-          <span class="card-title activator grey-text text-darken-4">{{title}}</span>
+          {{title}}
         </div>
-      </li>
+      </div>
     </script>
 
     <script type="text/x-handlebars-template" id="wallTemplate">
@@ -60,6 +60,7 @@
           <a href="/" class="brand-logo">
             Task Management App
           </a>
+          <div class="pull-right main-badge-container"></div>
         </div>
       </nav>
     </header>

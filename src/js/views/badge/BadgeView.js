@@ -1,20 +1,15 @@
-import Handlebars from 'handlebars';
+import tmpl from './../../utils/templates';
+import View from './../ParentView';
 
-class BadgeManager {
-  constructor() {
-    this.badgeCountTemplate = Handlebars.compile($("#badgeCountTemplate").html());
+class BadgeView extends View {
+  constructor (container, count) {
+
+    super(container, tmpl.badgeTemplate, '.badge');
+
+    this.data = {count};
 
     this.render();
-    this.bindEvents();
-  }
-
-  render() {
-
-  }
-
-  bindEvents() {
-
   }
 }
 
-export default BadgeManager;
+export default BadgeView;

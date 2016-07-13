@@ -2,7 +2,7 @@ import Handlebars from 'handlebars';
 import $ from 'jquery';
 
 export default {
-  badgeTemplate:    Handlebars.compile($("#badgeCountTemplate").html()),
+  badgeTemplate:    Handlebars.compile($("#badgeTemplate").html()),
   addFormTemplate:  Handlebars.compile($("#addFormTemplate").html()),
   wallTemplate:     Handlebars.compile($("#wallTemplate").html()),
   laneTemplate:     Handlebars.compile($("#laneTemplate").html()),
