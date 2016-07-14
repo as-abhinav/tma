@@ -1,6 +1,3 @@
-import './../../../../node_modules/object.observe/dist/object-observe-lite';
-import './../../../../node_modules/array.observe/array-observe';
-
 import $ from 'jquery';
 import tmpl from './../../utils/templates';
 import View from './../ParentView';

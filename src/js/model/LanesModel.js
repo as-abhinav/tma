@@ -1,4 +1,6 @@
 import st from '../utils/storage';
+import './../../../node_modules/object.observe/dist/object-observe-lite';
+import './../../../node_modules/array.observe/array-observe';
 
 class LanesModel {
   constructor() {
@@ -48,18 +50,6 @@ class LanesModel {
     this.storeLanes();
   }
 
-  bindEvents(data, callback) {
-    data = data || this.lanes;
-    Array.observe(data, callback);
-  }
-
-  bindEventOnAll(callback) {
-    for(let i=0, len = this.lanes.length; i<len;i++) {
-      let lane = this.lanes[i];
-      this.bindEvents(lane.tasks, callback);
-    }
-  }
-
   getTaskObject(taskId) {
     let self = this, task;
     self.lanes.map(lane => {
@@ -90,6 +80,28 @@ class LanesModel {
     }
 
     this.storeLanes(this.lanes);
+  }
+
+  bindEvents(data, callback) {
+    data = data || this.lanes;
+    Array.observe(data, callback);
+  }
+
+  bindEventOnAll(callback) {
+    for(let i=0, len = this.lanes.length; i<len;i++) {
+      let lane = this.lanes[i];
+      this.bindEvents(lane.tasks, callback);
+    }
+  }
+
+  rebindAll(callback) {
+    // This is required for the garbage collection and let the observe work in right way, due to some issues.
+    for(let i=0, len = this.lanes.length; i<len;i++) {
+      let lane = this.lanes[i];
+      Array.unobserve(lane.tasks, callback);
+    }
+
+    this.bindEventOnAll(callback);
   }
 }
 

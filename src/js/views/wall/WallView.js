@@ -28,17 +28,21 @@ class WallView extends View {
   }
 
   renderOverAllCount() {
-    new BadgeView($('.main-badge-container'), LaneModel.getAllTaskCount());
+    new MainBadgeView($('.main-badge-container'), LaneModel.getAllTaskCount());
   }
 
   bindDataEvents() {
     const allLanes = LaneModel.lanes;
-    LaneModel.bindEventOnAll(c => {
+    const updateHandler = c => {
       allLanes.map(l => {
         new BadgeView($(`#lane_${l.identifier} .badge-container`), l.tasks.length);
         new MainBadgeView($(Elements.mainBadgeSelector));
       });
-    });
+
+      LaneModel.rebindAll(updateHandler);
+    };
+
+    LaneModel.bindEventOnAll(updateHandler);
   }
 }
 

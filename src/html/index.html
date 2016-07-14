@@ -6,6 +6,7 @@
     <title>Task Management App</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="app.css">
+    <script src="lib/sortable.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body>
     <script type="text/x-handlebars-template" id="badgeTemplate">
@@ -29,7 +30,7 @@
     </script>
 
     <script type="text/x-handlebars-template" id="laneTemplate">
-      <div id="lane_{{identifier}}" class="lane col s12 m4">
+      <div id="lane_{{identifier}}" class="lane col s12 m4" data-id="{{identifier}}">
         <header class="row">
           <h3 class="col s10">{{title}}</h3>
           <div class="col s2 badge-container"></div>
@@ -39,7 +40,7 @@
     </script>
 
     <script type="text/x-handlebars-template" id="taskTemplate">
-      <div id="card_{{identifier}}" class="card small">
+      <div id="card_{{identifier}}" class="card small" data-id="{{identifier}}">
         <div class="card-content">
           {{title}}
         </div>

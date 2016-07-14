@@ -1,6 +1,5 @@
 import tmpl from './../../utils/templates';
 import $ from 'jquery';
-import dragula from 'dragula';
 import View from './../ParentView';
 import LaneView from './../lane/LaneView';
 import LaneModel from '../../model/LanesModel';
@@ -24,14 +23,29 @@ class LanesView extends View {
   }
 
   bindEvents() {
-    dragula($('.card-container').toArray())
-      .on('drop', function (el) {
-        const $el = $(el);
-        const $laneEl = $el.closest('.lane');
-        const taskId = $el.attr('id').replace('card_', '');
-        const laneId = $laneEl.attr('id').replace('lane_','');
-        LaneModel.addTaskToLane(laneId, taskId);
+    const $lanes = $('.lanes .lane .card-container'), laneIds = [];
+
+    $lanes.each(lane => {
+      laneIds.push($lanes.eq(lane).attr('id'))
+    });
+
+    for(let i=0, len = $lanes.length; i<len;i++) {
+      let id = laneIds[i];
+
+      Sortable.create($lanes.get(i), {
+        group: {
+          name: id,
+          put: laneIds
+        },
+        animation: 100,
+        onEnd: function (evt) {
+          const newLaneId = $(evt.item).closest('.lane').data('id');
+          const taskId = $(evt.item).data('id');
+
+          LaneModel.addTaskToLane(newLaneId, taskId);
+        }
       });
+    }
   }
 }
 
