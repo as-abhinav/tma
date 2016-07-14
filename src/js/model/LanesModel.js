@@ -37,7 +37,7 @@ class LanesModel {
   getLane(id) {
     // return default todolane
     id = id || "todoLane";
-    return this.lanes.find(lane => lane.identifier === id);
+    return this.lanes.find(lane => lane.identifier == id);
   }
 
   addTask(task, laneId) {
@@ -51,6 +51,13 @@ class LanesModel {
   bindEvents(data, callback) {
     data = data || this.lanes;
     Array.observe(data, callback);
+  }
+
+  bindEventOnAll(callback) {
+    for(let i=0, len = this.lanes.length; i<len;i++) {
+      let lane = this.lanes[i];
+      this.bindEvents(lane.tasks, callback);
+    }
   }
 
   getTaskObject(taskId) {
@@ -67,10 +74,11 @@ class LanesModel {
   addTaskToLane(laneId, taskId) {
     const task = this.getTaskObject(taskId);
 
-    const lanes = this.lanes.map(lane => {
+    for(let i=0, len = this.lanes.length; i<len;i++) {
+      let lane = this.lanes[i];
       const laneHasTask = lane.tasks && lane.tasks.includes(task);
       if (laneHasTask) {
-        lane.tasks = lane.tasks.filter(taskObj => taskObj !== task);
+        lane.tasks = lane.tasks.filter(taskObj => taskObj.identifier != task.identifier);
       }
 
       if (lane.identifier == laneId) {
@@ -79,24 +87,9 @@ class LanesModel {
           lane.tasks.push(task);
         }
       }
-      return lane;
-    });
+    }
 
-    this.storeLanes(lanes);
-  }
-
-  removeTaskFromLane(laneId, taskId) {
-    const task = this.getTaskObject(taskId);
-
-    const lanes = this.lanes.map(lane => {
-      if (lane.identifier == laneId) {
-        lane.tasks = lane.tasks.filter(taskObj => taskObj !== task);
-      }
-      return lane;
-    });
-
-
-    this.storeLanes(lanes);
+    this.storeLanes(this.lanes);
   }
 }
 

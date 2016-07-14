@@ -3,9 +3,7 @@ import './../../../../node_modules/array.observe/array-observe';
 
 import $ from 'jquery';
 import tmpl from './../../utils/templates';
-import Elements from './../../utils/elements';
 import View from './../ParentView';
-import BadgeView from './../badge/BadgeView';
 import LaneModel from './../../model/LanesModel';
 import TaskView from './../tasks/TaskView';
 
@@ -15,7 +13,6 @@ class AddFormView extends View {
 
     this.render();
     this.bindEvents();
-    this.bindDataObserver();
   }
 
   bindEvents() {
@@ -28,18 +25,13 @@ class AddFormView extends View {
         identifier: (new Date()).getTime().toString(),
         title
       };
+
       LaneModel.addTask(task, null);
+
+      new TaskView(null, task);
+
       self.$el.get(0).reset();
     });
-  }
-
-  bindDataObserver() {
-    LaneModel.getLane().tasks = LaneModel.getLane().tasks || [];
-    LaneModel.bindEvents(LaneModel.getLane().tasks, function(changes) {
-      const changedObject = changes[0];
-      new TaskView(null, changedObject.object[changedObject.index]);
-    });
-
   }
 }
 

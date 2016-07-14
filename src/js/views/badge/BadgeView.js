@@ -3,12 +3,15 @@ import View from './../ParentView';
 
 class BadgeView extends View {
   constructor (container, count) {
-    container = container || $('#todolane .badge-container');
     super(container, tmpl.badgeTemplate, '.badge');
 
-    this.data = {count, label: count>1?'Projects':'Project'};
+    this.data = {count, label: this.getBadgeLabel(count)};
 
     this.render();
+  }
+
+  getBadgeLabel(count) {
+    return count>1?'Projects':'Project'
   }
 }
 
