@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/as_abhinav/zendesk-todo.git"
+    "url": "git://github.com/as-abhinav/todo-list.git"
   },
   "author": "as_abhinav",
   "devDependencies": {
