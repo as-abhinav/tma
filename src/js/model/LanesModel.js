@@ -1,17 +1,20 @@
 import st from '../utils/storage';
 
 class LanesModel {
-  constructor () {
+  constructor() {
     this.lanes = st.get('app') || [
       {
         title: "Todo",
-        identifier: "todoLane"
+        identifier: "todoLane",
+        tasks: []
       }, {
         title: "In Progress",
-        identifier: "inprogressLane"
+        identifier: "inprogressLane",
+        tasks: []
       }, {
         title: "Done",
-        identifier: "doneLane"
+        identifier: "doneLane",
+        tasks: []
       }
     ];
   }
@@ -20,7 +23,7 @@ class LanesModel {
     // Store in local storage
     st.set('app', data || this.lanes);
   }
-  
+
   getAllTaskCount(selectedLane) {
     let count = 0;
     const lanes = selectedLane ? [selectedLane] : this.lanes;
@@ -33,7 +36,7 @@ class LanesModel {
 
   getLane(id) {
     // return default todolane
-    id = id ||  "todoLane";
+    id = id || "todoLane";
     return this.lanes.find(lane => lane.identifier === id);
   }
 
@@ -54,7 +57,7 @@ class LanesModel {
     let self = this, task;
     self.lanes.map(lane => {
       lane.tasks && lane.tasks.map(taskObj => {
-        if(task) return;
+        if (task) return;
         task = (taskObj.identifier == taskId) ? taskObj : false;
       });
     });
@@ -82,7 +85,7 @@ class LanesModel {
     this.storeLanes(lanes);
   }
 
-  removeTaskFromLane(laneId, taskId){
+  removeTaskFromLane(laneId, taskId) {
     const task = this.getTaskObject(taskId);
 
     const lanes = this.lanes.map(lane => {

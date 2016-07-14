@@ -30,12 +30,12 @@ class WallView extends View {
   bindDataEvents() {
 
     LaneModel.lanes.map(lane => {
-      const $laneElement = $(`#lane_${lane.identifier} .badge-container`);
+      const allLanes = LaneModel.lanes;
 
-      Array.observe(lane.tasks, (changes) => {
-        // console.log(changes);
-        new BadgeView($laneElement, lane.tasks.length);
-        new BadgeView($(Elements.mainBadgeSelector), LaneModel.getAllTaskCount());
+      Array.observe(lane.tasks, (c) => {
+        allLanes.map(l => {
+          new BadgeView($(`#lane_${l.identifier} .badge-container`), l.tasks.length);
+        });
       });
     });
   }
