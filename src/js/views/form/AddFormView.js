@@ -1,8 +1,11 @@
 import './../../../../node_modules/object.observe/dist/object-observe-lite';
 import './../../../../node_modules/array.observe/array-observe';
 
+import $ from 'jquery';
 import tmpl from './../../utils/templates';
+import Elements from './../../utils/elements';
 import View from './../ParentView';
+import BadgeView from './../badge/BadgeView';
 import LaneModel from './../../model/LanesModel';
 import TaskView from './../tasks/TaskView';
 

@@ -1,7 +1,11 @@
+import $ from 'jquery';
+
 import tmpl from '../../utils/templates';
+import Elements from './../../utils/elements';
+import util from './../../utils/util';
 
 import View from './../ParentView';
-import Elements from './../../utils/elements';
+
 import LanesView from '../lane/LanesView';
 import AddFormView from './../form/AddFormView';
 import BadgeView from './../badge/BadgeView';

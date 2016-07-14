@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import tmpl from '../../utils/templates';
 import View from './../ParentView';
 import TasksView from './../tasks/TasksView';

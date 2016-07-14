@@ -1,4 +1,5 @@
 import tmpl from './../../utils/templates';
+import $ from 'jquery';
 import dragula from 'dragula';
 import View from './../ParentView';
 import LaneView from './../lane/LaneView';

@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 class View {
   constructor(container, template, selector) {
     this.container = container;
