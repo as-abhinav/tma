@@ -1,4 +1,4 @@
-# Zendesk - Task Management App
+# Task Management App
 
 ## How to run the app
 
